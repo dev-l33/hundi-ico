@@ -25,19 +25,10 @@ contract Crowdsale is Ownable {
     uint public saleStartDate = 1529064000;
     uint public saleEndDate = 1531656000;
 
-    // The owner of this address is the Marketing fund
-    address public marketingFundAddress;
-
-    uint public constant MARKETING_FUND = 30000000 ether;
-
-    // The owner of this address is the Bounty fund
-    address public bountyFundAddress;
-
-    uint public constant BOUNTY_FUND = 15000000 ether;
-
-    // crowdsale + reserved fund 180,000,000
-    uint public constant CROWDSALE_FUND = 45000000 ether;
-    uint public constant RESERVED_FUND = 210000000 ether;
+    // // Emission 300,000,000
+    // crowdsale + reserved fund 300,000,000
+    uint public constant CROWDSALE_FUND = 10000000 ether;
+    uint public constant RESERVED_FUND = 290000000 ether;
 
     // address where funds are collected
     address public wallet;
@@ -59,25 +50,11 @@ contract Crowdsale is Ownable {
     */
     event TokenPurchase(address indexed purchaser, uint value, uint amount);
 
-    function Crowdsale(
-        address _wallet,
-        address _marketingFundAddress,
-        address _bountyFundAddress) public
-        {
+    function Crowdsale(address _wallet) public {
         require(_wallet != address(0));
-        require(_marketingFundAddress != address(0));
-        require(_bountyFundAddress != address(0));
 
         token = createTokenContract();
-
         wallet = _wallet;
-        marketingFundAddress = _marketingFundAddress;
-        bountyFundAddress = _bountyFundAddress;
-
-        // // Emission 300,000,000
-
-        token.mint(marketingFundAddress, MARKETING_FUND);
-        token.mint(bountyFundAddress, BOUNTY_FUND);
         
         // reserve fund
         token.mint(wallet, RESERVED_FUND);
